@@ -1,0 +1,9 @@
+# Ignore everything by default
+/*
+
+
+# Un-ignore the specific folders or files you actually want to track
+!.gitignore
+!skills/
+!agents/
+!plugins/

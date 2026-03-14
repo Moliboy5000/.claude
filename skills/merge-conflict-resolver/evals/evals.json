@@ -1,0 +1,23 @@
+{
+  "skill_name": "merge-conflict-resolver",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just tried to merge the feature/auth branch into main and got conflicts in a couple files. Can you help me sort them out?",
+      "expected_output": "Claude should detect conflicted files via git status, read each file, present each conflict hunk with ours/theirs analysis and a recommendation, then wait for user approval before resolving and staging.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm rebasing my branch onto main and hit a conflict on the first commit. There are conflicts in src/config.py and src/utils.py. Help me fix them.",
+      "expected_output": "Claude should recognize this is a rebase (not a merge), analyze both conflicted files, present recommendations per hunk, resolve after approval, stage files, and remind user to run git rebase --continue.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "hey so i cherry-picked a commit from another branch and now package.json and src/index.ts both have conflict markers everywhere. its a mess, can you untangle it?",
+      "expected_output": "Claude should handle the cherry-pick context, deal with potentially many conflict hunks across two files (including a tricky package.json with dependency version conflicts), present clear recommendations, and guide through resolution.",
+      "files": []
+    }
+  ]
+}
