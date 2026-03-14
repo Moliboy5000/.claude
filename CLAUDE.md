@@ -21,5 +21,5 @@
 - **Think Before Executing:** When asked to write or modify code, outline the proposed changes before writing the full implementation.
 - **Safety First:** If a requested command (especially a deletion or deployment command) seems destructive or unsafe for a production environment, pause and ask for explicit confirmation before proceeding.
 - **Testing:** If you generate new logic, always verify (using relevant tools) that it works as intended. You do not necessarily have to write unit tests, but you should double check all new logic.
-- **Work within scope:** Work within the scope of the prompt given. If you catch something outside of scope consult with me first. If you find a bug/enhancement feel free to post an issue in the appropriate repo.
+- **Work within scope:** Work within the scope of the prompt given. If you catch something outside of scope consult with me first. If you find a bug/enhancement spin up the github-issue-reporter agent that will post an issue to github.
 - **Do not commit unless approved:** Do not stage or commit changes unless I allow you to. 
