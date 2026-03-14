@@ -3,6 +3,8 @@
 
 
 # Un-ignore the specific folders or files you actually want to track
+!README.md
+!CLAUDE.md
 !.gitignore
 !skills/
 !agents/
