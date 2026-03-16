@@ -171,3 +171,19 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 - **Do not commit unless approved:** Do not stage or commit changes unless I allow you to.
 
 @RTK.md
+
+## gstack
+
+- For all web browsing, navigation, and QA tasks, use the `/browse` skill from gstack — never use `mcp__claude-in-chrome__*` tools.
+- If gstack skills aren't working, run `cd ~/.claude/skills/gstack && ./setup` to rebuild the binary and register skills.
+
+Available gstack skills:
+- `/plan-ceo-review` — Founder/CEO mode: rethink the problem, find the 10-star product
+- `/plan-eng-review` — Eng manager mode: architecture, data flow, diagrams, edge cases, tests
+- `/review` — Paranoid staff engineer: find bugs that pass CI but blow up in production
+- `/ship` — Release engineer: sync main, run tests, resolve reviews, push, open PR
+- `/browse` — QA engineer: give the agent eyes to navigate, click, screenshot, and verify
+- `/qa` — QA + fix engineer: test app, find bugs, fix with atomic commits, re-verify
+- `/qa-only` — QA reporter: pure bug report without code changes
+- `/setup-browser-cookies` — Session manager: import real browser cookies for authenticated testing
+- `/retro` — Engineering manager: team-aware retrospective with metrics and per-person feedback
