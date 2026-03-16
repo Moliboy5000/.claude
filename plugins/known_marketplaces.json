@@ -5,7 +5,7 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/home/moli/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-03-16T10:32:24.114Z"
+    "lastUpdated": "2026-03-16T11:29:59.500Z"
   },
   "impeccable": {
     "source": {
@@ -14,5 +14,13 @@
     },
     "installLocation": "/home/moli/.claude/plugins/marketplaces/impeccable",
     "lastUpdated": "2026-03-16T10:32:25.261Z"
+  },
+  "omc": {
+    "source": {
+      "source": "git",
+      "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+    },
+    "installLocation": "/home/moli/.claude/plugins/marketplaces/omc",
+    "lastUpdated": "2026-03-16T11:25:58.093Z"
   }
 }

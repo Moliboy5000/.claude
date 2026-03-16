@@ -3,6 +3,7 @@
 ## You typically have access to these additional command-line tools (otherwise you can ask me for them)
 - **AWS CLI:** USE VERY CAREFULLY, you are free to read whatever you want but always double check any changes you want to make.
 - **Github CLI** Feel free to use in addition to the MCP server if you wish.
+- **Custom subagents** When given a task, check first if it is reasonable to delegate to a subagent.
 
 ## Code Style and Conventions
 - **General:** Write clean, modular, and self-documenting code. Favor readability over cleverness. Follow MVC for frontend projects, separate business logic and UI.

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "plugins": {
+    "oh-my-claudecode@omc": [
+      {
+        "scope": "user",
+        "installPath": "/home/moli/.claude/plugins/cache/omc/oh-my-claudecode/4.8.2",
+        "version": "4.8.2",
+        "installedAt": "2026-03-16T11:26:44.435Z",
+        "lastUpdated": "2026-03-16T11:26:44.435Z",
+        "gitCommitSha": "7d07356366606364076addb8b3e10f3ad1f5500f"
+      }
+    ],
+    "impeccable@impeccable": [
+      {
+        "scope": "user",
+        "installPath": "/home/moli/.claude/plugins/cache/impeccable/impeccable/1.3.0",
+        "version": "1.3.0",
+        "installedAt": "2026-03-16T11:27:19.551Z",
+        "lastUpdated": "2026-03-16T11:27:19.551Z",
+        "gitCommitSha": "f3f4f9056ae71f019815d4a7b01e669ac5fcdeca"
+      }
+    ]
+  }
+}
