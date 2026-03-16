@@ -5,6 +5,9 @@ tools: Glob, Grep, Read, WebFetch, WebSearch, Bash, ToolSearch, TaskCreate, Task
 allowed_tools:
   - Bash(gh issue*)
   - Bash(gh label*)
+  - Bash(gh repo*)
+  - Bash(gh auth*)
+  - Bash(git remote*)
 model: haiku
 color: red
 ---
