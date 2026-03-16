@@ -2,6 +2,9 @@
 name: github-issue-reporter
 description: "Use this agent when you discover a bug, vulnerability, enhancement opportunity, or any other issue that is outside the current scope of work and needs to be tracked via a GitHub issue. This agent should be used proactively whenever something noteworthy is found during development, code review, or debugging that should not be addressed immediately but must not be forgotten.\\n\\nExamples:\\n\\n- Example 1:\\n  user: \"Please refactor the authentication module to use JWT tokens\"\\n  assistant: \"While refactoring the authentication module, I noticed that the password hashing is using MD5 which is a security vulnerability. This is out of scope for the current task, so let me use the github-issue-reporter agent to create a tracked issue for it.\"\\n  <Agent tool call to github-issue-reporter with details about the MD5 vulnerability>\\n\\n- Example 2:\\n  user: \"Fix the pagination bug on the users endpoint\"\\n  assistant: \"I've fixed the pagination bug. While investigating, I also noticed that the database queries in the orders endpoint are missing indexes which could cause performance issues at scale. Let me use the github-issue-reporter agent to file an issue for that.\"\\n  <Agent tool call to github-issue-reporter with details about missing indexes>\\n\\n- Example 3:\\n  user: \"Add input validation to the form component\"\\n  assistant: \"I've added the input validation. During my work I spotted a potential XSS vulnerability in the markdown renderer component. Since that's outside our current scope, I'll use the github-issue-reporter agent to document it as a GitHub issue.\"\\n  <Agent tool call to github-issue-reporter with details about the XSS vulnerability>"
 tools: Glob, Grep, Read, WebFetch, WebSearch, Bash, ToolSearch, TaskCreate, TaskGet, TaskUpdate, TaskList, EnterWorktree, ExitWorktree
+allowed_tools:
+  - Bash(gh issue*)
+  - Bash(gh label*)
 model: haiku
 color: red
 ---
