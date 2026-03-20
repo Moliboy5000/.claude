@@ -20,6 +20,12 @@
     "type": "command",
     "command": "node $HOME/.claude/hud/omc-hud.mjs"
   },
+  "permissions": {
+    "allow": [
+      "Bash(gh issue:*)",
+      "Bash(gh pr:*)"
+    ]
+  },
   "enabledPlugins": {
     "oh-my-claudecode@omc": true,
     "impeccable@impeccable": true
