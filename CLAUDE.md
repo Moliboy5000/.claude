@@ -19,7 +19,12 @@ Work directly for: trivial ops, small clarifications, single commands.
 Route code to `executor` (use `model=opus` for complex work). Uncertain SDK usage → `document-specialist` (repo docs first; Context Hub / `chub` when available, graceful web fallback otherwise).
 
 **OPENCODE FIRST — default delegation target:**
-Before spawning a Claude subagent for any heavy task, prefer delegating via `opencode-ask` (GitHub Copilot). This conserves Claude quota for orchestration. Use Claude subagents only when deep tool access (file edits, LSP, git) is required and cannot be expressed as a prompt.
+Before spawning a Claude subagent for any heavy task, prefer delegating via OpenCode (GitHub Copilot). This conserves Claude quota for orchestration. Use Claude subagents only when deep tool access (file edits, LSP, git) is required and cannot be expressed as a prompt.
+
+**Delegation hierarchy (apply in order):**
+1. **Multi-step / iterative tasks** → `opencode-orchestrator` agent (handles the back-and-forth loop with OpenCode autonomously until objective is met)
+2. **One-shot queries** → `opencode-ask` directly via Bash (single prompt, single response)
+3. **Requires Claude tool access** (file edits, LSP, git, MCP) → Claude subagent (`executor`, `debugger`, etc.)
 </delegation_rules>
 
 <model_routing>
@@ -41,9 +46,10 @@ OpenCode owns: heavy implementation work, code generation, multi-file analysis, 
 
 **Routing rules — apply in this order:**
 1. Trivial / single-step → handle directly (no delegation)
-2. Research, analysis, review, code generation, debugging → `opencode-ask "<task>"`
-3. Requires file edits + reasoning together → Claude subagent (`executor`, `debugger`, etc.)
-4. Parallel workloads → fire multiple `opencode-ask` calls in background via Bash tool
+2. Multi-step implementation, research, debugging, or any iterative task → `opencode-orchestrator` agent (it handles the OpenCode loop autonomously)
+3. One-shot queries (single question, single answer) → `opencode-ask "<task>"` via Bash
+4. Requires Claude tool access (file edits, LSP, git, MCP) → Claude subagent (`executor`, `debugger`, etc.)
+5. Parallel workloads → fire multiple `opencode-orchestrator` agents in background, or multiple `opencode-ask` calls for simple parallel queries
 
 **Always use `--agent-prompt` when delegating to opencode.** Match the agent role to the task type — this shapes opencode's persona, constraints, and output style to match the OMC agent catalog.
 
@@ -59,7 +65,19 @@ Agent-to-role mapping:
 - Planning / breakdown → `planner`
 - Verification / correctness check → `verifier`
 
-**Invocation pattern:**
+**Invocation patterns:**
+
+**Multi-step tasks → `opencode-orchestrator` agent (preferred for iterative work):**
+Use the Agent tool with `subagent_type: "opencode-orchestrator"`. Provide a clear objective and success criteria. The orchestrator handles the back-and-forth with OpenCode autonomously.
+```
+# Examples of when to use opencode-orchestrator:
+- "Implement the favorites system end-to-end"
+- "Debug and fix the duplicate listings issue"
+- "Research the best notification strategy for our stack"
+- "Refactor the auth module to use JWT tokens"
+```
+
+**One-shot queries → `opencode-ask` (for single prompt/response):**
 ```bash
 # Standard — always include --agent-prompt
 opencode-ask --agent-prompt executor "implement the repository layer for listings"
@@ -75,7 +93,7 @@ opencode-ask -m github-copilot/gpt-5-mini "what HTTP status code for a soft-dele
 # With artifact capture
 opencode-ask --agent-prompt code-reviewer "review the listings module" > .omc/artifacts/ask/opencode-review.md
 
-# Parallel workloads — fire in background
+# Parallel one-shot queries — fire in background
 opencode-ask --agent-prompt executor "task A" > /tmp/oc-a.md &
 opencode-ask --agent-prompt executor "task B" > /tmp/oc-b.md &
 wait && cat /tmp/oc-a.md /tmp/oc-b.md
@@ -89,7 +107,7 @@ explore (haiku), analyst (opus), planner (opus), architect (opus), debugger (son
 </agent_catalog>
 
 <tools>
-External AI: `/team N:executor "task"`, `omc team N:codex|gemini "..."`, `omc ask <claude|codex|gemini>`, `/ccg`, `/ask-opencode` (GitHub Copilot via opencode — default: `claude-sonnet-4.6`, architecture: `claude-opus-4.6`, fast: `gpt-5-mini`)
+External AI: `opencode-orchestrator` agent (multi-step OpenCode delegation), `opencode-ask` (one-shot queries), `/team N:executor "task"`, `omc team N:codex|gemini "..."`, `omc ask <claude|codex|gemini>`, `/ccg` (GitHub Copilot via opencode — default: `claude-sonnet-4.6`, architecture: `claude-opus-4.6`, fast: `gpt-5-mini`)
 OMC State: `state_read`, `state_write`, `state_clear`, `state_list_active`, `state_get_status`
 Teams: `TeamCreate`, `TeamDelete`, `SendMessage`, `TaskCreate`, `TaskList`, `TaskGet`, `TaskUpdate`
 Notepad: `notepad_read`, `notepad_write_priority`, `notepad_write_working`, `notepad_write_manual`
