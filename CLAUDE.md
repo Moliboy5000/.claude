@@ -18,6 +18,9 @@ Delegate for: multi-file changes, refactors, debugging, reviews, planning, resea
 Work directly for: trivial ops, small clarifications, single commands.
 Route code to `executor` (use `model=opus` for complex work). Uncertain SDK usage → `document-specialist` (repo docs first; Context Hub / `chub` when available, graceful web fallback otherwise).
 
+** USE GITHUB-ISSUE-CREATOR FOR ISSUES OUT OF SCOPE **
+If you discover bugs, security features or anything that can be improved but is out of scope do not try to fix it. Instead call the github-issue-creator agent who will post an issue on github.
+
 **OPENCODE FIRST — default delegation target:**
 Before spawning a Claude subagent for any heavy task, prefer delegating via OpenCode (GitHub Copilot). This conserves Claude quota for orchestration. Use Claude subagents only when deep tool access (file edits, LSP, git) is required and cannot be expressed as a prompt.
 
@@ -160,13 +163,9 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 
 <!-- OMC:END -->
 
-<!-- User customizations (migrated from previous CLAUDE.md) -->
-# Global CLAUDE.md for all projects
-
 ## You typically have access to these additional command-line tools (otherwise you can ask me for them)
 - **AWS CLI:** USE VERY CAREFULLY, you are free to read whatever you want but always double check any changes you want to make.
 - **Github CLI** Feel free to use in addition to the MCP server if you wish.
-- **Custom subagents** When given a task, check first if it is reasonable to delegate to a subagent.
 
 ## Code Style and Conventions
 - **General:** Write clean, modular, and self-documenting code. Favor readability over cleverness. Follow MVC for frontend projects, separate business logic and UI.
