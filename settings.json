@@ -43,5 +43,6 @@
       }
     }
   },
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "model": "opus"
 }
