@@ -21,7 +21,7 @@ Always consider which repo(s) are affected. Follow all coding standards from CLA
 
 ## OpenCode Invocation Rules
 
-Always use `--agent-prompt` to shape OpenCode's persona. Match the role to the task:
+Always use `--agent-prompt` to shape OpenCode's persona. The full catalog lives in `copilot-instructions.md` under "AI Tooling: Claude Code Agents & Skills". Core roles:
 
 | Task type | Role flag | Model |
 |-----------|-----------|-------|
@@ -30,10 +30,17 @@ Always use `--agent-prompt` to shape OpenCode's persona. Match the role to the t
 | Architecture / system design | `architect` | `github-copilot/claude-opus-4.6` |
 | Security audit | `security-reviewer` | default |
 | Code quality / logic review | `code-reviewer` | default |
+| Test strategy / TDD / coverage | `test-engineer` | default |
 | Research / exploration | `scientist` or `explore` | default |
 | Planning / breakdown | `planner` | `github-copilot/claude-opus-4.6` |
+| Pre-planning / requirements | `analyst` | `github-copilot/claude-opus-4.6` |
 | Verification / correctness | `verifier` | default |
 | Documentation | `writer` | `github-copilot/gpt-5-mini` |
+| Codebase search / pattern find | `explore` | default |
+| External docs / SDK lookup | `document-specialist` | default |
+| Git commits / history | `git-master` | default |
+| Causal tracing / evidence | `tracer` | default |
+| Plan critique / multi-perspective | `critic` | `github-copilot/claude-opus-4.6` |
 | Fast lookups | _(no agent)_ | `github-copilot/gpt-5-mini` |
 
 ```bash

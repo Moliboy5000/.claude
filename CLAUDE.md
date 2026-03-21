@@ -59,17 +59,25 @@ OpenCode owns: heavy implementation work, code generation, multi-file analysis, 
 
 **Always use `--agent-prompt` when delegating to opencode.** Match the agent role to the task type — this shapes opencode's persona, constraints, and output style to match the OMC agent catalog.
 
+**Full catalog:** `copilot-instructions.md` → "AI Tooling: Claude Code Agents & Skills" section lists every available `--agent-prompt` role, every Claude Code skill (`/skill-name`), and model routing rules. OpenCode can reference this catalog too.
+
 Agent-to-role mapping:
 - Implementation / code changes → `executor`
 - Bug investigation / root cause → `debugger`
 - Architecture / system design → `architect`
 - Security audit → `security-reviewer`
 - Code quality / logic review → `code-reviewer`
-- Test strategy / coverage → `test-engineer`
+- Test strategy / TDD / coverage → `test-engineer`
 - Research / exploration → `scientist` or `explore`
+- Codebase search / pattern find → `explore`
+- External docs / SDK reference → `document-specialist`
 - Documentation → `writer`
 - Planning / breakdown → `planner`
+- Pre-planning / requirements → `analyst`
 - Verification / correctness check → `verifier`
+- Git commits / history / rebasing → `git-master`
+- Causal tracing / evidence-driven debug → `tracer`
+- Plan critique / multi-perspective review → `critic`
 
 **Invocation patterns:**
 
