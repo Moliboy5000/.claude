@@ -24,6 +24,9 @@ If you discover bugs, security features or anything that can be improved but is 
 **OPENCODE FIRST — default delegation target:**
 Before spawning a Claude subagent for any heavy task, prefer delegating via OpenCode (GitHub Copilot). This conserves Claude quota for orchestration. Use Claude subagents only when deep tool access (file edits, LSP, git) is required and cannot be expressed as a prompt.
 
+**BANNED SUBAGENT TYPES — never use these:**
+Never spawn `general-purpose`, `Explore`, or `Plan` subagent types. These consume Claude tokens for work that OpenCode can handle. Route ALL research, exploration, planning, and multi-step delegation through `opencode-orchestrator` instead. The only Claude subagents permitted are OMC specialized agents (`executor`, `debugger`, `verifier`, etc.) when direct tool access is required.
+
 **Delegation hierarchy (apply in order):**
 1. **Multi-step / iterative tasks** → `opencode-orchestrator` agent (handles the back-and-forth loop with OpenCode autonomously until objective is met)
 2. **One-shot queries** → `opencode-ask` directly via Bash (single prompt, single response)
