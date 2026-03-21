@@ -186,6 +186,7 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 - **Testing:** If you generate new logic, always verify (using relevant tools) that it works as intended. You do not necessarily have to write unit tests, but you should double check all new logic.
 - **Work within scope:** Work within the scope of the prompt given. If you catch something outside of scope consult with me first. If you find a bug/enhancement spin up the github-issue-reporter agent that will post an issue to github.
 - **Do not commit unless approved:** Do not stage or commit changes unless I allow you to.
+- **No Explore subagent:** Never use the `Explore` subagent for codebase exploration or research. Instead, delegate to `opencode-orchestrator` which uses OpenCode (GitHub Copilot) to conserve Claude tokens. Always use `mode: "bypassPermissions"` when spawning `opencode-orchestrator` so it can read and edit files without being blocked.
 
 @RTK.md
 
