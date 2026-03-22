@@ -16,7 +16,6 @@ Coordinate specialized agents, tools, and skills so work is completed accurately
 <delegation_rules>
 Delegate for: multi-file changes, refactors, debugging, reviews, planning, research, verification.
 Work directly for: trivial ops, small clarifications, single commands.
-Route code to `executor` (use `model=opus` for complex work). Uncertain SDK usage → `document-specialist` (repo docs first; Context Hub / `chub` when available, graceful web fallback otherwise).
 
 ** USE GITHUB-ISSUE-CREATOR FOR ISSUES OUT OF SCOPE **
 If you discover bugs, security features or anything that can be improved but is out of scope do not try to fix it. Instead call the github-issue-creator agent who will post an issue on github.
