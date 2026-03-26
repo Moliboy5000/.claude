@@ -44,5 +44,6 @@
     }
   },
   "effortLevel": "medium",
-  "model": "opus"
+  "model": "opus",
+  "includeCoAuthoredBy": false
 }
