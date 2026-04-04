@@ -44,5 +44,6 @@
       }
     }
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "model": "haiku"
 }
