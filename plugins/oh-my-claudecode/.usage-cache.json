@@ -1,12 +1,12 @@
 {
-  "timestamp": 1775759306012,
+  "timestamp": 1775759421888,
   "data": {
-    "fiveHourPercent": 91,
-    "weeklyPercent": 44,
-    "fiveHourResetsAt": "2026-04-09T21:59:59.656Z",
-    "weeklyResetsAt": "2026-04-11T20:00:00.656Z"
+    "fiveHourPercent": 100,
+    "weeklyPercent": 45,
+    "fiveHourResetsAt": "2026-04-09T22:00:00.471Z",
+    "weeklyResetsAt": "2026-04-11T20:00:00.471Z"
   },
   "error": false,
   "source": "anthropic",
-  "lastSuccessAt": 1775759306012
+  "lastSuccessAt": 1775759421888
 }
