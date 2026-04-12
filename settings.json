@@ -44,6 +44,6 @@
       }
     }
   },
-  "effortLevel": "high",
-  "model": "haiku"
+  "effortLevel": "medium",
+  "model": "opus"
 }
