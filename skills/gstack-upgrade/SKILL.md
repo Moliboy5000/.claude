@@ -1,0 +1,1 @@
+/home/moli/.claude/skills/gstack/gstack-upgrade/SKILL.md

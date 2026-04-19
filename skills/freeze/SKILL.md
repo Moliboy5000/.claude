@@ -1,0 +1,1 @@
+/home/moli/.claude/skills/gstack/freeze/SKILL.md

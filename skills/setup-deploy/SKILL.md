@@ -1,0 +1,1 @@
+/home/moli/.claude/skills/gstack/setup-deploy/SKILL.md
