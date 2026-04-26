@@ -48,5 +48,7 @@
       }
     }
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "theme": "dark-ansi",
+  "verbose": true
 }
