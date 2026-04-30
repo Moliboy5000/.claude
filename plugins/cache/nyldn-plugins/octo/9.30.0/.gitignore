@@ -1,0 +1,121 @@
+# Claude Octopus - Git Ignore
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor directories and files
+.idea/
+.vscode/
+.serena/
+*.swp
+*.swo
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+!openclaw/dist/
+!mcp-server/dist/
+downloads/
+eggs/
+.eggs/
+lib/
+!scripts/lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.env
+
+# Test and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Generated Codex skills (build artifact from scripts/build-codex-skills.sh)
+.codex/skills/
+
+# Workspace data (generated at runtime)
+# Note: The actual workspace is at ~/.claude-octopus/
+# These are just in case someone runs from the repo directory
+.claude-octopus/
+results/
+.parallel-agents/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Development directory
+.dev/
+
+# Development working files (should not be in public repo)
+docs/IMPLEMENTATION-PLAN*.md
+docs/superpowers/plans/
+docs/superpowers/specs/
+docs/FEATURE-GAP.md
+docs/monthly-agent-review.md
+
+# Development working files (root-level only, not skills/*/SKILL.md)
+/skill.md
+
+# Progress tracking and working files (should be in scratchpad, not plugin dir)
+PHASE*_PROGRESS.md
+PHASE*_COMPLETE.md
+*_PROGRESS.md
+*_TODO.md
+*_NOTES.md
+scratch_*.md
+temp_*.md
+WIP_*.md
+
+# Test artifacts (from test infrastructure)
+tests/tmp/
+tests/**/*.log
+test-results*.xml
+/tmp/test_*.log
+
+# Coverage reports
+coverage-report.txt
+coverage-report.html
+*.bak
+
+# Environment & secrets
+.env.local
+.env.*.local
+*.key
+*.pem
+.tmp.*
+.claude/settings.local.json

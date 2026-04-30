@@ -1,0 +1,224 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Nightly builds at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  portability-lint:
+    name: Portability Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Check for GNU-only sed patterns
+        run: |
+          echo "Checking for non-portable sed usage..."
+          FAIL=0
+          # GNU-only command grouping in sed address ranges: sed '/pat/,/pat/{...}'
+          # This is the actual bug class from issue #255. sed -i is handled with
+          # platform conditionals throughout the codebase (see lib/config-display.sh).
+          if grep -rnE "sed\s.*'/[^']*,/[^']*\{" scripts/ hooks/ 2>/dev/null; then
+            echo "FAIL: GNU-only sed command grouping found. Use awk instead."
+            FAIL=1
+          fi
+          if [ "$FAIL" -eq 1 ]; then
+            echo ""
+            echo "Policy: use awk/grep for multi-line extraction. Reserve sed for single-line s/// only."
+            exit 1
+          fi
+          echo "OK: No non-portable sed patterns found."
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck on core scripts
+        run: |
+          shellcheck -s bash -S warning \
+            scripts/orchestrate.sh \
+            scripts/lib/*.sh \
+            hooks/*.sh \
+            2>&1 || true
+
+  smoke:
+    name: Smoke Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/orchestrate.sh
+          chmod +x scripts/sync-marketplace.sh
+          chmod +x tests/**/*.sh
+          find tests -name "*.sh" -type f -exec chmod +x {} \;
+
+      - name: Verify marketplace.json is up to date
+        run: ./scripts/sync-marketplace.sh --check
+
+      - name: Run smoke tests
+        run: make test-smoke
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-test-logs-${{ matrix.os }}
+          path: /tmp/test_*.log
+          retention-days: 7
+
+  unit:
+    name: Unit Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    needs: [smoke, portability-lint]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/orchestrate.sh
+          chmod +x tests/**/*.sh
+          find tests -name "*.sh" -type f -exec chmod +x {} \;
+
+      - name: Run unit tests
+        run: make test-unit
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: unit-test-results-${{ matrix.os }}
+          path: test-results*.xml
+          retention-days: 30
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: unit-test-logs-${{ matrix.os }}
+          path: /tmp/test_*.log
+          retention-days: 7
+
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: unit
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/orchestrate.sh
+          chmod +x tests/**/*.sh
+          find tests -name "*.sh" -type f -exec chmod +x {} \;
+
+      - name: Run integration tests
+        run: make test-integration
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: integration-test-results
+          path: test-results*.xml
+          retention-days: 30
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: integration-test-logs
+          path: /tmp/test_*.log
+          retention-days: 7
+
+  e2e:
+    name: End-to-End Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: [smoke, unit, integration, portability-lint]
+    # Only run E2E on main branch, scheduled builds, or manual trigger
+    if: github.ref == 'refs/heads/main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/orchestrate.sh
+          chmod +x tests/**/*.sh
+          find tests -name "*.sh" -type f -exec chmod +x {} \;
+
+      - name: Run E2E tests
+        run: make test-e2e
+        env:
+          # Add any necessary API keys or credentials here
+          # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CI: true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-test-results
+          path: test-results*.xml
+          retention-days: 30
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-test-logs
+          path: /tmp/test_*.log
+          retention-days: 7
+
+  test-summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [smoke, unit, integration, portability-lint]
+    if: always()
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+
+      - name: Create test summary
+        run: |
+          echo "# Claude Octopus Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Category | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Smoke | ${{ needs.smoke.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit | ${{ needs.unit.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Integration | ${{ needs.integration.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Portability | ${{ needs.portability-lint.result }} |" >> $GITHUB_STEP_SUMMARY

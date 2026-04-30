@@ -20,6 +20,16 @@
         "lastUpdated": "2026-03-16T11:27:19.551Z",
         "gitCommitSha": "f3f4f9056ae71f019815d4a7b01e669ac5fcdeca"
       }
+    ],
+    "octo@nyldn-plugins": [
+      {
+        "scope": "user",
+        "installPath": "/home/moli/.claude/plugins/cache/nyldn-plugins/octo/9.30.0",
+        "version": "9.30.0",
+        "installedAt": "2026-04-30T16:59:33.280Z",
+        "lastUpdated": "2026-04-30T16:59:33.280Z",
+        "gitCommitSha": "65698f66a134285f3a71ed7ebea57650eebba8d1"
+      }
     ]
   }
 }

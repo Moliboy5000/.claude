@@ -32,7 +32,8 @@
   },
   "enabledPlugins": {
     "oh-my-claudecode@omc": true,
-    "impeccable@impeccable": true
+    "impeccable@impeccable": true,
+    "octo@nyldn-plugins": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -45,6 +46,12 @@
       "source": {
         "source": "git",
         "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+      }
+    },
+    "nyldn-plugins": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/nyldn/claude-octopus.git"
       }
     }
   },

@@ -22,5 +22,13 @@
     },
     "installLocation": "/home/moli/.claude/plugins/marketplaces/omc",
     "lastUpdated": "2026-03-16T11:25:58.093Z"
+  },
+  "nyldn-plugins": {
+    "source": {
+      "source": "git",
+      "url": "https://github.com/nyldn/claude-octopus.git"
+    },
+    "installLocation": "/home/moli/.claude/plugins/marketplaces/nyldn-plugins",
+    "lastUpdated": "2026-04-30T16:59:25.748Z"
   }
 }
