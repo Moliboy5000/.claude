@@ -57,5 +57,6 @@
   },
   "effortLevel": "high",
   "theme": "dark-ansi",
-  "verbose": true
+  "verbose": true,
+  "model": "haiku"
 }
