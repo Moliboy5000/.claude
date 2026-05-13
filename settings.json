@@ -13,6 +13,7 @@
       "Bash(gh pr status:*)"
     ]
   },
+  "model": "haiku",
   "hooks": {
     "PreToolUse": [
       {
@@ -33,7 +34,8 @@
   "enabledPlugins": {
     "oh-my-claudecode@omc": true,
     "impeccable@impeccable": true,
-    "octo@nyldn-plugins": true
+    "octo@nyldn-plugins": true,
+    "figma@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -57,6 +59,5 @@
   },
   "effortLevel": "high",
   "theme": "dark-ansi",
-  "verbose": true,
-  "model": "haiku"
+  "verbose": true
 }

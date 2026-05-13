@@ -30,6 +30,16 @@
         "lastUpdated": "2026-04-30T16:59:33.280Z",
         "gitCommitSha": "65698f66a134285f3a71ed7ebea57650eebba8d1"
       }
+    ],
+    "figma@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/moli/.claude/plugins/cache/claude-plugins-official/figma/2.1.56",
+        "version": "2.1.56",
+        "installedAt": "2026-05-13T16:42:10.989Z",
+        "lastUpdated": "2026-05-13T16:42:10.989Z",
+        "gitCommitSha": "ae28e4b9e920b06a7b10b05af117f004d7f2b1ae"
+      }
     ]
   }
 }
