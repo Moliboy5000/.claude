@@ -59,5 +59,6 @@
   },
   "effortLevel": "high",
   "theme": "dark-ansi",
-  "verbose": true
+  "verbose": true,
+  "tui": "fullscreen"
 }
