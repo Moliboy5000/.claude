@@ -13,7 +13,7 @@
       "Bash(gh pr status:*)"
     ]
   },
-  "model": "haiku",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -35,7 +35,8 @@
     "oh-my-claudecode@omc": true,
     "impeccable@impeccable": true,
     "octo@nyldn-plugins": true,
-    "figma@claude-plugins-official": true
+    "figma@claude-plugins-official": true,
+    "codex-orchestrator@codex-orchestrator-marketplace": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -55,10 +56,16 @@
         "source": "git",
         "url": "https://github.com/nyldn/claude-octopus.git"
       }
+    },
+    "codex-orchestrator-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "kingbootoshi/codex-orchestrator"
+      }
     }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "theme": "dark-ansi",
-  "verbose": true,
-  "tui": "fullscreen"
+  "verbose": true
 }

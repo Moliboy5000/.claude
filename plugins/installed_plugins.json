@@ -34,11 +34,21 @@
     "figma@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/home/moli/.claude/plugins/cache/claude-plugins-official/figma/2.1.56",
-        "version": "2.1.56",
+        "installPath": "/home/moli/.claude/plugins/cache/claude-plugins-official/figma/2.2.78",
+        "version": "2.2.78",
         "installedAt": "2026-05-13T16:42:10.989Z",
-        "lastUpdated": "2026-05-13T16:42:10.989Z",
+        "lastUpdated": "2026-07-12T12:23:54.824Z",
         "gitCommitSha": "ae28e4b9e920b06a7b10b05af117f004d7f2b1ae"
+      }
+    ],
+    "codex-orchestrator@codex-orchestrator-marketplace": [
+      {
+        "scope": "user",
+        "installPath": "/home/moli/.claude/plugins/cache/codex-orchestrator-marketplace/codex-orchestrator/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-07-12T12:15:47.241Z",
+        "lastUpdated": "2026-07-12T12:15:47.241Z",
+        "gitCommitSha": "035d5813a1d93c4d8385ee4d5ff09a9416f6a749"
       }
     ]
   }

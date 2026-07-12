@@ -14,13 +14,16 @@ Coordinate specialized agents, tools, and skills so work is completed accurately
 </operating_principles>
 
 <delegation_rules>
-Delegate for: multi-file changes, refactors, debugging, reviews, planning, research, verification.
-Work directly for: trivial ops, small clarifications, single commands.
+Delegate for: multi-file changes, refactors, debugging, reviews, planning, research, verification, testing, exploration.
+Work directly for: trivial ops, small clarifications, single commands, conversational context.
 
 **Delegation hierarchy (apply in order):**
-1. **Multi-step / iterative tasks** → `opencode-orchestrator` agent
-2. **One-shot queries** → `opencode-ask` directly via Bash
-3. **Requires Claude tool access** (file edits, LSP, git, MCP) → Claude subagent (`executor`, `debugger`, etc.)
+1. **ANY coding task** (implementation, refactoring, bugfixes, testing) → `codex-orchestrator` (Codex agents)
+2. **Research & exploration** → `codex-orchestrator` (Codex agents with `--sandbox read-only`)
+3. **Code review & security audit** → `codex-orchestrator` (Codex agents with `--sandbox read-only`)
+4. **ONE-OFF conversational reads** only → Direct Read tool (do NOT spawn agents for single-file reads)
+
+**BANNED**: Never spawn Claude subagents (`general-purpose`, `Explore`, `Plan`, `opencode-orchestrator`). All work goes through Codex agents.
 </delegation_rules>
 
 <model_routing>
@@ -116,11 +119,50 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 ## Out-of-Scope Issues
 If you discover bugs, security issues, or enhancements that are out of scope, do not try to fix them. Instead, call the `github-issue-reporter` agent to post an issue on GitHub.
 
-## OpenCode Delegation
-- **OPENCODE FIRST:** Before spawning a Claude subagent for any heavy task, prefer delegating via OpenCode (GitHub Copilot). This conserves Claude quota for orchestration. Use Claude subagents only when deep tool access (file edits, LSP, git) is required.
-- **BANNED SUBAGENT TYPES:** Never spawn `general-purpose`, `Explore`, or `Plan` subagent types. Route ALL research, exploration, planning, and multi-step delegation through `opencode-orchestrator` instead.
-- Quick reference: `opencode-orchestrator` for multi-step, `opencode-ask` for one-shot. Always use `--agent-prompt <role>` and `mode: "bypassPermissions"`.
-- For full workflow details, routing rules, agent-to-role mapping, and invocation patterns: invoke `/opencode-workflow`.
+## Codex Orchestrator Delegation
+
+**CODEX FIRST:** All coding, research, testing, and review work goes through Codex Orchestrator. This gives you parallel execution with full file access and specialized agent focus.
+
+### When to Use Codex Agents
+
+| Task | Sandbox | Notes |
+|------|---------|-------|
+| Implementation, bugfixes, refactoring | `workspace-write` (default) | Full code changes |
+| Testing, verification | `workspace-write` (default) | Can write test files |
+| Research, exploration, audits | `--sandbox read-only` | No file modifications |
+| Security review, code review | `--sandbox read-only` | Read-only investigation |
+
+### Quick Start
+
+```bash
+# Implementation
+codex-agent start "Implement the login flow per docs/prds/auth.md" --map
+
+# Research
+codex-agent start "Audit auth module for security issues" --map -s read-only
+
+# Testing
+codex-agent start "Write comprehensive tests for the payment module" --map
+
+# Parallel agents
+codex-agent start "Investigate feed pagination" --map -s read-only        # job1
+codex-agent start "Review caching logic" --map -s read-only               # job2
+codex-agent await-turn $job1 & codex-agent await-turn $job2 &            # wait for both
+```
+
+### Pipeline Stages
+
+**Research** → **Synthesis** (you review findings) → **PRD** (you write) → **Implementation** (Codex) → **Review** (Codex, read-only) → **Testing** (Codex) → **Verify** (you approve)
+
+Full details: See the Codex Orchestrator skill documentation (`/codex-orchestrator:codex-orchestrator`).
+
+### Important Notes
+
+- **NEVER spawn Claude subagents** for coding tasks (no `general-purpose`, `Explore`, `Plan`, `opencode-orchestrator`)
+- **Always use `--map`** flag to give agents codebase context (requires `docs/CODEBASE_MAP.md`)
+- **Parallel execution** — spawn multiple agents at once, await results independently
+- **Turn-aware** — agents notify instantly when done; use `codex-agent await-turn <jobId>` to block until next response
+- **Agent timing** — expect 10-60 min per task depending on complexity; this is normal and quality is worth the wait
 
 @RTK.md
 
