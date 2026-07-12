@@ -123,6 +123,25 @@ If you discover bugs, security issues, or enhancements that are out of scope, do
 
 **CODEX FIRST:** All coding, research, testing, and review work goes through Codex Orchestrator. This gives you parallel execution with full file access and specialized agent focus.
 
+### Availability & PATH (READ THIS FIRST — before concluding codex is unavailable)
+
+- The `codex-agent` binary lives at `~/.codex-orchestrator/bin/codex-agent`. It is **NOT** on
+  PATH in Claude Code's non-interactive Bash shell, because that dir is only exported in
+  `~/.bashrc` (which non-interactive shells do not source). A *different*, incomplete bin dir
+  from the plugin cache IS on PATH but does **not** contain the executable.
+- **Consequence:** a bare `which codex-agent` returns "command not found" even though it is fully
+  installed. Do **NOT** interpret that as "not installed" and do **NOT** fall back to Claude
+  subagents or raw `codex exec`.
+- **Before any codex-agent call**, prepend PATH (shell state does not persist between Bash calls,
+  so do this every invocation):
+  ```bash
+  export PATH="$HOME/.codex-orchestrator/bin:$PATH"
+  ```
+  Then verify once with `codex-agent health` (expects `tmux: OK` / `codex: …` / `Status: Ready`).
+- **This rule applies in Plan Mode too.** Even while planning, delegate research/exploration to
+  codex-orchestrator with `-s read-only`. Do NOT use Claude `Explore`/`Plan` subagents as a
+  substitute — read-only Codex agents are the correct plan-mode delegation path.
+
 ### When to Use Codex Agents
 
 | Task | Sandbox | Notes |
@@ -159,7 +178,8 @@ Full details: See the Codex Orchestrator skill documentation (`/codex-orchestrat
 ### Important Notes
 
 - **NEVER spawn Claude subagents** for coding tasks (no `general-purpose`, `Explore`, `Plan`, `opencode-orchestrator`)
-- **Always use `--map`** flag to give agents codebase context (requires `docs/CODEBASE_MAP.md`)
+- **`--map` only when a map exists** — the flag injects `docs/CODEBASE_MAP.md`, which most Brokr
+  repos do NOT have. If absent, omit `--map` and put the needed context directly in the prompt.
 - **Parallel execution** — spawn multiple agents at once, await results independently
 - **Turn-aware** — agents notify instantly when done; use `codex-agent await-turn <jobId>` to block until next response
 - **Agent timing** — expect 10-60 min per task depending on complexity; this is normal and quality is worth the wait
