@@ -141,6 +141,14 @@ If you discover bugs, security issues, or enhancements that are out of scope, do
 - **This rule applies in Plan Mode too.** Even while planning, delegate research/exploration to
   codex-orchestrator with `-s read-only`. Do NOT use Claude `Explore`/`Plan` subagents as a
   substitute — read-only Codex agents are the correct plan-mode delegation path.
+- **First-run trust prompts (silent time-sink).** After `codex-agent start` in a repo Codex has
+  not seen before, the agent parks at two interactive gates — *"trust this directory"* then
+  *"trust project-local hooks"* — BEFORE it runs your prompt. The job shows `RUNNING` the whole
+  time (the tmux session is alive) but produces no output. If `codex-agent capture <id>` shows a
+  trust prompt, answer it. Use **raw keys** for these single-key TUI menus:
+  `tmux send-keys -t codex-agent-<id> 1` (trust dir), then `t` (trust hooks), `Escape` to close
+  submenus. Do NOT use `codex-agent send` for these — it appends Enter and mis-navigates the menu.
+  Sanity check: a healthy agent shows tool calls in `capture`; a parked one shows only the prompt.
 
 ### When to Use Codex Agents
 
