@@ -17,7 +17,7 @@
       "Bash(echo:*)"
     ]
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "tui": "fullscreen",
   "theme": "dark-ansi",
   "verbose": true

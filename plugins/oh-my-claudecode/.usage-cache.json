@@ -1,8 +1,12 @@
 {
-  "timestamp": 1784825709780,
-  "data": null,
-  "error": true,
-  "errorReason": "network",
+  "timestamp": 1785436993485,
+  "data": {
+    "fiveHourPercent": 0,
+    "weeklyPercent": 64,
+    "fiveHourResetsAt": "2026-07-30T23:40:00.383Z",
+    "weeklyResetsAt": "2026-08-01T15:00:00.383Z"
+  },
+  "error": false,
   "source": "anthropic",
-  "lastSuccessAt": 1783881941428
+  "lastSuccessAt": 1785436993484
 }
